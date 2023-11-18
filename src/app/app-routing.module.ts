@@ -23,6 +23,10 @@ const routes: Routes = [
     path: 'forgotten-pass',
     loadChildren: () => import('./pages/forgotten-pass/forgotten-pass.module').then( m => m.ForgottenPassPageModule)
   },
+  {
+    path: 'qr-reader',
+    loadChildren: () => import('./pages/qr-reader/qr-reader.module').then( m => m.QrReaderPageModule)
+  },
 
 ];
 

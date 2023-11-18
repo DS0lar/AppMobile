@@ -1,0 +1,20 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>QR SCAN</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+  <div id="container" class="ion-padding">
+    <ion-button expand="full" (click)="openScanner()">Abrir Escáner de QR</ion-button>
+    <div id="videoContainer" [ngClass]="{ 'hide-result': isScanning }">
+      <video #videoElement autoplay="true"></video>
+    </div>
+  </div>
+  <canvas #canvas style="display: none;"></canvas>
+  <div id="container" class="ion-padding">
+    <img #capturedImage src="" alt="Captured Image">
+  </div>
+  <ion-button style="display: flex; justify-content: center;" [routerLink]="qrScanned ? '/clase' : null">Registrar Clase</ion-button>
+</ion-content>  

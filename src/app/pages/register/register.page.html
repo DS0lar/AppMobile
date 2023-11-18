@@ -1,13 +1,61 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>register</ion-title>
+    <ion-title>Registro</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">register</ion-title>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="/login"></ion-back-button>
+      </ion-buttons>
+      <ion-title size="large" slot="end">Registro</ion-title>
     </ion-toolbar>
   </ion-header>
+      <ion-card style="margin-top: 100px;">
+        <ion-card-content>
+          <form [formGroup]="formularioRegistro">
+            <ion-card-header  style="display: flex; align-items: center; justify-content: center;">
+              <ion-card-title>Registrate</ion-card-title>
+            </ion-card-header>
+            <br>
+            <ion-label>Username</ion-label>
+            <ion-input formControlName="user" aria-placeholder="Username" type="text" maxlength="8" id="username" name="username"></ion-input>
+            <br>
+            <ion-label>Password</ion-label>
+            <ion-input formControlName="password" aria-placeholder="Password" type="Password" maxlength="4" id="password" name="password"></ion-input>
+            <br>
+            <ion-label>ConfirmPassword</ion-label>
+            <ion-input formControlName="confirmPassword" aria-placeholder="ConfirmPassword" type="Password" maxlength="4" id="confirmPassword" name="confirmPassword"></ion-input>
+            <br>
+            <ion-label>rut(sin puntos y con codigo verificador)</ion-label>
+            <ion-input formControlName="rut" aria-placeholder="rut" type="text" maxlength="10" id="rut" name="rut"></ion-input>
+          </form>
+          <br>
+          <ion-label>Region</ion-label> <br>
+          <ion-list>
+            <ion-item>
+              <ion-select (ionChange)="cargarComuna()" placeholder="Seleccione" [(ngModel)]="regionSel">
+                <ion-select-option [value]="r.id" *ngFor="let r of regiones">{{r.nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          <br>
+          <ion-label>Comuna</ion-label> <br>
+
+          <ion-list>
+            <ion-item>
+              <ion-select  placeholder="Seleccione" [(ngModel)]="comunaSel">
+                <ion-select-option [value]="r.id" *ngFor="let r of comunas">{{r.nombre}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          </ion-card-content>
+        </ion-card>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <!-- <ion-button routerLink="/home">Ingresar</ion-button> -->
+          <ion-button (click)="guardar()">Registrarse</ion-button>
+        </div>
+
 </ion-content>
