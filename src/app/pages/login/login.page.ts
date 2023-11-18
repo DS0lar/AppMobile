@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup,FormControl,Validators,FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 
+// Importa IonicStorageService
+import { IonicStorageService } from 'src/app/services/ionic-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -13,30 +15,31 @@ export class LoginPage implements OnInit {
 
   formularioLogin: FormGroup;
 
-  constructor(public fb: FormBuilder, public alertController: AlertController, private router: Router) {
+  constructor(
+    public fb: FormBuilder,
+    public alertController: AlertController,
+    private router: Router,
+    // Inyecta IonicStorageService
+    private storage: IonicStorageService
+  ) {
     this.formularioLogin = this.fb.group({
-      'user': new FormControl("",Validators.required),
-      'password': new FormControl("",Validators.required)
-    })
-   }
-
-  ngOnInit() {
-
+      'user': new FormControl("", Validators.required),
+      'password': new FormControl("", Validators.required)
+    });
   }
 
-async entrar(){
+  ngOnInit() {
+  }
 
+  async entrar() {
     var f = this.formularioLogin.value;
-    var usuarioStr = localStorage.getItem('usuario');
-    console.log(usuarioStr);
 
-    if (usuarioStr !== null) {
-      var usuario = JSON.parse(usuarioStr);
-    }
+    // Usa Ionic Storage para obtener datos
+    const usuario = await this.storage.get('usuario');
 
-    if(usuario.nombre == f.user && usuario.password == f.password){
+    if (usuario && usuario.nombre === f.user && usuario.password === f.password) {
       this.router.navigate(['/qr-reader']);
-    }else{
+    } else {
       const alert = await this.alertController.create({
         header: 'Datos incorrectos',
         message: 'El usuario o contraseña son incorrectos',
@@ -45,6 +48,5 @@ async entrar(){
       await alert.present();
       return;
     }
-
   }
 }
