@@ -4,6 +4,7 @@ import { AlertController } from '@ionic/angular';
 import { LocationService } from 'src/app/services/location.service';
 import { Region } from 'src/app/models/region';
 import { Router } from '@angular/router';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 // Importa IonicStorageService
 import { IonicStorageService } from 'src/app/services/ionic-storage.service';
@@ -27,13 +28,16 @@ export class RegisterPage implements OnInit {
     public alertController: AlertController,
     private locationService: LocationService,
     // Inyecta IonicStorageService
-    private storage: IonicStorageService
+    private storage: IonicStorageService,
+
   ) {
     this.formularioRegistro = this.fb.group({
       'user': new FormControl("", Validators.required),
       'password': new FormControl("", Validators.required),
-      'confirmPassword': new FormControl("", Validators.required)
-    });
+      'confirmPassword': new FormControl("", Validators.required),
+
+       });
+
   }
 
   ngOnInit() {
@@ -74,11 +78,12 @@ export class RegisterPage implements OnInit {
       var usuario = {
         nombre: f.user,
         password: f.password,
-        rut: f.rut
+        region: this.regionSel,
+        comuna: this.comunaSel
       };
 
       // Usa Ionic Storage para guardar datos
-      this.storage.set('usuario', usuario);
+      await this.storage.set('usuario', usuario);
 
       this.formularioRegistro.reset();
       this.router.navigate(['/login']);

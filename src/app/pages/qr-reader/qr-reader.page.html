@@ -1,20 +1,52 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>QR SCAN</ion-title>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="text-end">
+      DUOC UC
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
-
-<ion-content>
+<ion-content class="ion-content">
   <div id="container" class="ion-padding">
-    <ion-button expand="full" (click)="openScanner()">Abrir Escáner de QR</ion-button>
+    <div class="container" id="custom-div" [ngClass]="{'hidden': !showInfo}">
+      <div *ngIf="userData">
+        <h2 class="pt-2 pb-3 text-center fw-bolder">Bienvenido</h2>
+        <p class="">Usuario: {{ userData.nombre }} {{ userData.apellido }}</p>
+        <div *ngIf="userData.region !== undefined && userData.comuna !== undefined">
+          <p>Región: {{ userData.region }}</p>
+          <p class="pb-3">Comuna: {{ userData.comuna }}</p>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="container" id="custom-div2" [ngClass]="{'hidden': !showInfo}">
+      <div>
+        <h2 class="text-center fw-bolder pt-3 mb-3" id="cust">Información de la clase:</h2>
+        <ul>
+          <li *ngFor="let dato of userData.datosEscaneados">{{ dato }}</li>
+        </ul>
+        <p class="pt-3" id="latitude"></p>
+        <p class="" id="longitude"></p>
+        <p>Localización en futuras actualizaciones</p>
+      </div>
+    </div>
+
+
+
+
+
+    <ion-button expand="full" (click)="openScanner()">Escánear QR</ion-button>
+
     <div id="videoContainer" [ngClass]="{ 'hide-result': isScanning }">
       <video #videoElement autoplay="true"></video>
+
     </div>
+
+
+
   </div>
-  <canvas #canvas style="display: none;"></canvas>
-  <div id="container" class="ion-padding">
-    <img #capturedImage src="" alt="Captured Image">
-  </div>
-  <ion-button style="display: flex; justify-content: center;" [routerLink]="qrScanned ? '/clase' : null">Registrar Clase</ion-button>
-</ion-content>  
+</ion-content>

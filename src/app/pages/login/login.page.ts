@@ -32,21 +32,26 @@ export class LoginPage implements OnInit {
   }
 
   async entrar() {
-    var f = this.formularioLogin.value;
+    try {
+      var f = this.formularioLogin.value;
 
-    // Usa Ionic Storage para obtener datos
-    const usuario = await this.storage.get('usuario');
+      // Usa Ionic Storage para obtener datos
+      const usuario = await this.storage.get('usuario');
 
-    if (usuario && usuario.nombre === f.user && usuario.password === f.password) {
-      this.router.navigate(['/qr-reader']);
-    } else {
-      const alert = await this.alertController.create({
-        header: 'Datos incorrectos',
-        message: 'El usuario o contraseña son incorrectos',
-        buttons: ['Aceptar'],
-      });
-      await alert.present();
-      return;
+      if (usuario && usuario.nombre === f.user && usuario.password === f.password) {
+        this.router.navigate(['/qr-reader']);
+      } else {
+        const alert = await this.alertController.create({
+          header: 'Datos incorrectos',
+          message: 'El usuario o contraseña son incorrectos',
+          buttons: ['Aceptar'],
+        });
+        await alert.present();
+        return;
+      }
+    } catch (error) {
+      console.error('Error en la función entrar:', error);
     }
   }
+
 }

@@ -15,10 +15,7 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule)
   },
-  {
-    path: 'error-page',
-    loadChildren: () => import('./pages/error-page/error-page.module').then( m => m.ErrorPagePageModule)
-  },
+
   {
     path: 'forgotten-pass',
     loadChildren: () => import('./pages/forgotten-pass/forgotten-pass.module').then( m => m.ForgottenPassPageModule)
@@ -26,6 +23,14 @@ const routes: Routes = [
   {
     path: 'qr-reader',
     loadChildren: () => import('./pages/qr-reader/qr-reader.module').then( m => m.QrReaderPageModule)
+  },
+  {
+    path: 'error-page',
+    loadChildren: () => import('./pages/error-page/error-page.module').then( m => m.ErrorPagePageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./pages/error-page/error-page.module').then( m => m.ErrorPagePageModule)
   },
 
 ];
