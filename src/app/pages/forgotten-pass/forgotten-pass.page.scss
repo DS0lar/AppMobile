@@ -1,0 +1,24 @@
+ion-content {
+
+  --background: url('../../../assets/img/fondo.png') no-repeat center center fixed;
+  background-size: cover;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+ion-label, ion-button, ion-input, ion-select, ion-textarea {
+  font-family: 'Roboto', sans-serif;
+}
+#cardt{
+  background: rgba(5, 1, 1, 0.733);
+}
+#title{
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  color:yellow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}

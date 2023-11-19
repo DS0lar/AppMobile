@@ -1,34 +1,22 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Registro</ion-title>
-  </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-back-button defaultHref="/login"></ion-back-button>
-      </ion-buttons>
-      <ion-title size="large" slot="end">Registro</ion-title>
-    </ion-toolbar>
-  </ion-header>
-      <ion-card style="margin-top: 100px;">
+<ion-content class="ion-content">
+  <ion-card id="cardt">
+    <h1 class="text-center mt-5" id="title">REGISTRO</h1>
+  </ion-card>
+      <ion-card style="margin-top: 10px;" id="cardt">
         <ion-card-content>
           <form [formGroup]="formularioRegistro">
-            <ion-card-header  style="display: flex; align-items: center; justify-content: center;">
-              <ion-card-title>Registrate</ion-card-title>
-            </ion-card-header>
+
             <br>
             <ion-label>Username</ion-label>
             <ion-input formControlName="user" aria-placeholder="Username" type="text" maxlength="8" id="username" name="username"></ion-input>
             <br>
             <ion-label>Password</ion-label>
             <ion-input formControlName="password" aria-placeholder="Password" type="Password" maxlength="4" id="password" name="password"></ion-input>
-            <br>
-            <ion-label>ConfirmPassword</ion-label>
-            <ion-input formControlName="confirmPassword" aria-placeholder="ConfirmPassword" type="Password" maxlength="4" id="confirmPassword" name="confirmPassword"></ion-input>
-            <br>
+
              </form>
           <br>
           <ion-label>Region</ion-label> <br>
@@ -50,10 +38,11 @@
             </ion-item>
           </ion-list>
           </ion-card-content>
+          <ion-button expand="full" color="warning" (click)="guardar()">REGISTRAR</ion-button>
         </ion-card>
         <div style="display: flex; align-items: center; justify-content: center;">
           <!-- <ion-button routerLink="/home">Ingresar</ion-button> -->
-          <ion-button (click)="guardar()">Registrarse</ion-button>
+
         </div>
 
 </ion-content>

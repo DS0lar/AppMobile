@@ -34,7 +34,7 @@ export class RegisterPage implements OnInit {
     this.formularioRegistro = this.fb.group({
       'user': new FormControl("", Validators.required),
       'password': new FormControl("", Validators.required),
-      'confirmPassword': new FormControl("", Validators.required),
+      
 
        });
 

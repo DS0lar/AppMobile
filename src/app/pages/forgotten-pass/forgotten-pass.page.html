@@ -1,13 +1,30 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>forgotten-pass</ion-title>
-  </ion-toolbar>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">forgotten-pass</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-content">
+  <ion-card id="cardt">
+    <h1 class="text-center mt-5" id="title">CAMBIAR CONTRASEÑA</h1>
+  </ion-card>
+      <ion-card style="margin-top: 10px;" id="cardt">
+        <ion-card-content>
+          <form [formGroup]="formularioRegistro">
+
+            <br>
+            <ion-label>Username</ion-label>
+            <ion-input formControlName="user" aria-placeholder="Username" type="text" maxlength="8" id="username" name="username"></ion-input>
+            <br>
+            <ion-label>Password</ion-label>
+            <ion-input formControlName="password" aria-placeholder="Password" type="Password" maxlength="4" id="password" name="password"></ion-input>
+
+             </form>
+
+          </ion-card-content>
+          <ion-button expand="full" color="warning" (click)="cambiar()">CAMBIAR</ion-button>
+        </ion-card>
+        <div style="display: flex; align-items: center; justify-content: center;">
+          <!-- <ion-button routerLink="/home">Ingresar</ion-button> -->
+
+        </div>
+
 </ion-content>

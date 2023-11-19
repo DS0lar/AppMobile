@@ -1,0 +1,43 @@
+#title{
+  font-family: 'Roboto', sans-serif;
+  font-weight: bold;
+  color:yellow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+#cardt{
+  background: rgba(5, 1, 1, 0.674);
+}
+
+#custom-button {
+  width: 100%; /* O ajusta el ancho según tus necesidades */
+
+  margin-left: 10px;
+  margin-right: 10px; /* Ajusta los márgenes según tus necesidades */
+}
+
+ion-content {
+
+  --background: url('../../../assets/img/fondo.png') no-repeat center center fixed;
+  background-size: cover;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+ion-label, ion-button, ion-input, ion-select, ion-textarea {
+  font-family: 'Roboto', sans-serif;
+}
+#btn{
+  color: white;
+}
+
+#cus{
+  padding-top: 10px;
+}
+
+
+
