@@ -1,0 +1,45 @@
+.hide-result {
+  display: none;
+  top: 200px;
+}
+#videoContainer {
+  height: calc(100vh - 40px); /* Ajusta la altura restando el doble del padding (20px arriba y 20px abajo) */
+  width: calc(100% - 40px); /* Ajusta el ancho restando el doble del padding (20px a la izquierda y 20px a la derecha) */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Añade un espacio de relleno de 20 píxeles alrededor del contenedor */
+}
+ion-content {
+  --background: url('../../../assets/img/prueba.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+#custom-div{
+  background-color: rgba(0, 0, 0, 0.459);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding-bottom: 0.1px;
+}
+#custom-div2{
+  background-color: rgba(0, 0, 0, 0.459);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  padding-bottom: 0.1px;
+
+}
+#custom{
+  border-bottom: 2px solid white;
+}
+
+#custom2{
+  border-bottom: 2px solid white;
+
+}
+
+.hidden {
+  display: none;
+}
+#cust{
+  border-top: 3px solid white;
+}
+
