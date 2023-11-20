@@ -3,43 +3,41 @@ import { BrowserMultiFormatReader, Result, BarcodeFormat } from '@zxing/library'
 import { DataService } from '../../services/data.service';
 import { IonicStorageService } from 'src/app/services/ionic-storage.service';
 
-
-
 @Component({
   selector: 'app-qr-reader',
   templateUrl: './qr-reader.page.html',
   styleUrls: ['./qr-reader.page.scss'],
 })
 export class QrReaderPage implements OnInit {
-
-  qrResult: string = ''; // Variable para almacenar el resultado del escaneo de QR
+  qrResult: string = '';
   codeReader: BrowserMultiFormatReader;
   isScanning: boolean = false;
+  showInfo: boolean = false; // Agrega esta propiedad
+  scanned: boolean = false; // Agrega esta propiedad
   userData: {
     nombre: string;
     apellido: string;
     carrera: string;
     rut: string;
-    datosEscaneados?: string[]; // Agrega datosEscaneados con el operador '?' para que sea opcional
-    region?: string; // Tipo de datos para la propiedad region
+    datosEscaneados?: string[];
+    region?: string;
     comuna?: string;
   } = {
     nombre: '',
     apellido: '',
     carrera: '',
     rut: '',
-  };// Inicializa 'userData' con propiedades predeterminadas
+  };
 
   @ViewChild('videoElement', { static: true }) videoElement: ElementRef | undefined;
 
-  constructor(private dataService: DataService,private storage: IonicStorageService,) {
-
+  constructor(private dataService: DataService, private storage: IonicStorageService) {
     this.codeReader = new BrowserMultiFormatReader();
   }
 
   ngOnInit() {
-    this.getUserInfo(); // Cargamos los datos del alumno al inicio
-
+    this.getUserInfo();
+/*
     // Obtener ubicación del usuario al iniciar la página
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -69,12 +67,10 @@ export class QrReaderPage implements OnInit {
       console.error('Geolocalización no es compatible en este navegador.');
       // Manejar casos donde la geolocalización no es compatible
     }
+*/
+
   }
 
-
-
-  scanned: boolean = false;
-  showInfo: boolean = false;
   openScanner() {
     if (this.videoElement) {
       const hints = new Map<BarcodeFormat, any>();
@@ -86,13 +82,37 @@ export class QrReaderPage implements OnInit {
           this.qrResult = result.getText();
           const datosEscaneados = this.qrResult.split(',');
 
+          // Obtén la región y la comuna si están disponibles
+          const region = datosEscaneados[0]; // Suponiendo que la región está en la primera posición
+          const comuna = datosEscaneados[1]; // Suponiendo que la comuna está en la segunda posición
+
+          // Actualiza solo las propiedades relevantes de userData
           this.userData = {
             ...this.userData,
             datosEscaneados: datosEscaneados,
           };
 
-          localStorage.setItem('userData', JSON.stringify(this.userData));
-          this.getUserInfo();
+          if (region && !this.userData.region) {
+            this.userData.region = region;
+          }
+
+          if (comuna && !this.userData.comuna) {
+            this.userData.comuna = comuna;
+          }
+
+          console.log('Datos escaneados:', datosEscaneados);
+
+          // Actualiza solo las propiedades relevantes en el localStorage
+          this.storage.set('usuario', {  // Usa la misma clave 'usuario' aquí
+            ...this.userData,
+          })
+          .then(() => {
+            // Llama a getUserInfo después de actualizar el localStorage
+            this.getUserInfo();
+          })
+          .catch((error) => {
+            console.error(error);
+          });
 
           this.showInfo = true;
           setTimeout(() => {
@@ -106,31 +126,29 @@ export class QrReaderPage implements OnInit {
       this.isScanning = true;
       this.scanned = true;
     }
-
   }
+
+
 
   closeScanner() {
     this.codeReader.reset();
     this.qrResult = '';
-    this.isScanning = false; // Agrega esta línea para ocultar la visualización de video
+    this.isScanning = false;
   }
 
-  getUserInfo() {
-    // Obtén la información del usuario desde Ionic Storage
-    this.storage.get('usuario').then((userInfo) => {
-      if (userInfo) {
-        const regionId = userInfo.region;
-        const comunaId = userInfo.comuna;
+  // En tu componente QrReaderPage
+  async getUserInfo() {
+    this.storage.get('usuario').then((userData) => {
+      if (userData) {
+        const regionNombre = userData.region;
+        const comunaNombre = userData.comuna;
 
-        // Obtén el nombre de la región y la comuna utilizando el servicio DataService
-        const regionNombre = this.dataService.getRegionNombrePorId(regionId);
-        const comunaNombre = this.dataService.getComunaNombrePorId(comunaId);
+        console.log('Region Nombre:', regionNombre);
+        console.log('Comuna Nombre:', comunaNombre);
 
         // Combina los datos del usuario y los datos escaneados en 'userData'
         this.userData = {
-          ...this.userData,
-          ...userInfo,
-          datosEscaneados: this.qrResult.split(','),
+          ...userData,
           region: regionNombre,
           comuna: comunaNombre,
         };
@@ -138,5 +156,5 @@ export class QrReaderPage implements OnInit {
     });
   }
 
-  
+
 }
