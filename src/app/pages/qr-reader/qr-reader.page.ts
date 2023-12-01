@@ -1,3 +1,4 @@
+
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BrowserMultiFormatReader, Result, BarcodeFormat } from '@zxing/library';
 import { DataService } from '../../services/data.service';
@@ -18,6 +19,7 @@ export class QrReaderPage implements OnInit {
     nombre: string;
     apellido: string;
     carrera: string;
+    profilePicture?: string; // Agrega esta propiedad
     rut: string;
     datosEscaneados?: string[];
     region?: string;
@@ -151,6 +153,7 @@ export class QrReaderPage implements OnInit {
           ...userData,
           region: regionNombre,
           comuna: comunaNombre,
+          profilePicture: userData.profilePicture, // Agrega esta línea
         };
       }
     });

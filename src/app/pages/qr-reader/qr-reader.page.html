@@ -1,3 +1,5 @@
+
+
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
@@ -14,6 +16,9 @@
       <div *ngIf="userData">
         <h2 class="pt-2 pb-3 text-center fw-bolder">Bienvenido</h2>
         <p class="">Usuario: {{ userData.nombre }} {{ userData.apellido }}</p>
+        <div *ngIf="userData.profilePicture">
+          <img [src]="userData.profilePicture" alt="Profile Picture" />
+        </div>
         <div *ngIf="userData.region !== undefined && userData.comuna !== undefined">
           <p>Región: {{ userData.region }}</p>
           <p class="pb-3">Comuna: {{ userData.comuna }}</p>
@@ -49,3 +54,8 @@
 
   </div>
 </ion-content>
+
+
+
+
+

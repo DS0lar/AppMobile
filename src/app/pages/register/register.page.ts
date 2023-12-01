@@ -1,10 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { LocationService } from 'src/app/services/location.service';
 import { Region } from 'src/app/models/region';
 import { Router } from '@angular/router';
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 // Importa IonicStorageService
 import { IonicStorageService } from 'src/app/services/ionic-storage.service';
@@ -15,6 +31,8 @@ import { IonicStorageService } from 'src/app/services/ionic-storage.service';
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage implements OnInit {
+  usuario: any = {}; // Define usuario aquí
+  @ViewChild('profilePicture', { static: false }) profilePicture?: ElementRef<any>;
 
   regiones: Region[] = [];
   comunas: any[] = [];
@@ -29,15 +47,13 @@ export class RegisterPage implements OnInit {
     private locationService: LocationService,
     // Inyecta IonicStorageService
     private storage: IonicStorageService,
-
   ) {
     this.formularioRegistro = this.fb.group({
       'user': new FormControl("", Validators.required),
       'password': new FormControl("", Validators.required),
-      
+    });
 
-       });
-
+    this.profilePicture = new ElementRef(null); // Agrega esta línea para asignar un valor inicial
   }
 
   ngOnInit() {
@@ -63,6 +79,28 @@ export class RegisterPage implements OnInit {
     }
   }
 
+  async takePicture() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri,
+    });
+
+    const imageUrl = image.webPath;
+
+    // Verifica si profilePicture está definido antes de acceder a su propiedad
+    if (this.profilePicture) {
+      // Set the image source
+      this.profilePicture.nativeElement.src = imageUrl;
+    }
+
+    // Save the image URL to Ionic Storage
+    await this.storage.set('profilePicture', imageUrl);
+
+    // Actualiza la propiedad usuario
+    this.usuario.profilePicture = imageUrl;
+  }
+
   async guardar() {
     var f = this.formularioRegistro.value;
 
@@ -79,7 +117,8 @@ export class RegisterPage implements OnInit {
         nombre: f.user,
         password: f.password,
         region: this.regionSel,
-        comuna: this.comunaSel
+        comuna: this.comunaSel,
+        profilePicture: await this.storage.get('profilePicture'), // Retrieve the image URL
       };
 
       // Usa Ionic Storage para guardar datos
@@ -90,3 +129,4 @@ export class RegisterPage implements OnInit {
     }
   }
 }
+
