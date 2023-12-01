@@ -43,9 +43,11 @@
               </ion-select>
             </ion-item>
           </ion-list>
-          <input #profilePicture style="display: none;" accept="image/*" capture="camera" type="file" (change)="takePicture()"/>
+          <input #profilePicture style="display: none;" accept="image/*" type="file" (change)="takePicture()" />
+
           <!-- Add a button to trigger the profile picture capture -->
-          <ion-button expand="full" color="primary" (click)="profilePicture.click()">Tomar Foto</ion-button>
+          <ion-button expand="full" color="primary" (click)="takePicture()">Tomar Foto</ion-button>
+
 
           <!-- Add an image element to display the taken profile picture -->
           <img #profilePictureElement [src]="usuario.profilePicture" alt="Profile Picture" />
