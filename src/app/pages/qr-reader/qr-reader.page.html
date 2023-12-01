@@ -33,9 +33,11 @@
         <ul>
           <li *ngFor="let dato of userData.datosEscaneados">{{ dato }}</li>
         </ul>
-        <p class="pt-3" id="latitude"></p>
-        <p class="" id="longitude"></p>
-        <p>Localización en futuras actualizaciones</p>
+        <p *ngIf="coordenadas">
+          Latitud: {{ coordenadas.latitude }}<br>
+          Longitud: {{ coordenadas.longitude }}
+        </p>
+        
       </div>
     </div>
 

@@ -3,13 +3,14 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BrowserMultiFormatReader, Result, BarcodeFormat } from '@zxing/library';
 import { DataService } from '../../services/data.service';
 import { IonicStorageService } from 'src/app/services/ionic-storage.service';
-
+import { Geolocation } from '@ionic-native/geolocation/ngx';
 @Component({
   selector: 'app-qr-reader',
   templateUrl: './qr-reader.page.html',
   styleUrls: ['./qr-reader.page.scss'],
 })
 export class QrReaderPage implements OnInit {
+  coordenadas: any = null;
   qrResult: string = '';
   codeReader: BrowserMultiFormatReader;
   isScanning: boolean = false;
@@ -33,12 +34,13 @@ export class QrReaderPage implements OnInit {
 
   @ViewChild('videoElement', { static: true }) videoElement: ElementRef | undefined;
 
-  constructor(private dataService: DataService, private storage: IonicStorageService) {
+  constructor(private dataService: DataService, private storage: IonicStorageService, private geolocation: Geolocation) {
     this.codeReader = new BrowserMultiFormatReader();
   }
 
   ngOnInit() {
     this.getUserInfo();
+    this.obtenerGeolocalizacion();
 /*
     // Obtener ubicación del usuario al iniciar la página
     if (navigator.geolocation) {
@@ -72,6 +74,8 @@ export class QrReaderPage implements OnInit {
 */
 
   }
+
+
 
   openScanner() {
     if (this.videoElement) {
@@ -128,6 +132,13 @@ export class QrReaderPage implements OnInit {
       this.isScanning = true;
       this.scanned = true;
     }
+  }
+  obtenerGeolocalizacion() {
+    this.geolocation.getCurrentPosition().then((resp) => {
+      this.coordenadas = resp.coords;
+    }).catch((error) => {
+      console.error('Error al obtener la geolocalización', error);
+    });
   }
 
 
